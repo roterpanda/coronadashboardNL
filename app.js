@@ -195,6 +195,7 @@ function generateCasesPerDayChart(data) {
       },
       columns: [["New Cases Per Day", ...finalDataArray]],
       type: "bar",
+      labels: true,
     },
     axis: {
       x: {
