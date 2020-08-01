@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coronavirus Dashboard The Netherlands</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="node_modules/billboard.js/dist/theme/insight.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="mainContainer">
+      <header>
+        <h1 id="mainHeading">
+          Coronavirus Dashboard NL
+        </h1>
+      </header>
+      <main>
+        <section id="newCases">
+          <h2>
+            New Cases/Admissions Per Municipality
+          </h2>
+
+          <div id="chartNewCases"></div>
+        </section>
+        <section id="casesLastWeekCumulative">
+          <h2>
+            Cases in Last 7 Days Per Municipality
+          </h2>
+          <h3 id="SevDayTotal"></h3>
+          <div id="weekBeforeCompare"></div>
+        </section>
+
+        <section id="casesLastWeekPerDay">
+          <h2>
+            Cases in Last 7 Days Per Day
+          </h2>
+
+          <div id="chartCasesLastWeekPerDay"></div>
+        </section>
+
+        <section id="casesNewTotalTable">
+          <h2>
+            New cases per region
+          </h2>
+          <table id="dataTable">
+            <thead>
+              <tr>
+                <th>Municipality</th>
+                <th>New Cases</th>
+                <th>7 Day Caseload</th>
+                <th>Cases in Total</th>
+                <th>New Hospital Admissions</th>
+                <th>Total Admissions</th>
+                <th>New Deaths</th>
+                <th>Total Deaths</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="loading"></div>
+        </section>
+      </main>
+      <script src="https://d3js.org/d3.v5.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/billboard.js/2.0.2/billboard.min.js"></script>
+      <script src="app.js" type="module"></script>
+    </div>
+  </body>
+</html>

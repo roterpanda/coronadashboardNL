@@ -1,0 +1,53 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+#mainContainer {
+  width: 95vw;
+  margin: 0 auto;
+}
+
+#casesNewTotalTable table {
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #222;
+  padding: 2px;
+}
+
+th {
+  cursor: pointer;
+}
+
+#casesNewTotalTable table tbody tr:nth-child(odd) {
+  background-color: silver;
+}
+
+#casesNewTotalTable table tbody tr:hover {
+  background-color: gold;
+}
+
+#casesNewTotalTable table tbody tr:first-child {
+  background-color: gold;
+  font-weight: bold;
+}
+
+#loading {
+  color: red;
+  font-weight: bold;
+  animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    color: red;
+  }
+  50% {
+    color: black;
+  }
+  100% {
+    color: red;
+  }
+}
