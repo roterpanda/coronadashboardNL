@@ -21,6 +21,12 @@ th {
   cursor: pointer;
 }
 
+section {
+  border: 1px solid grey;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
 #casesNewTotalTable table tbody tr:nth-child(odd) {
   background-color: silver;
 }
