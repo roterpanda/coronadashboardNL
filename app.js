@@ -168,21 +168,29 @@ function generate7DayChart() {
 function generateCasesPerDayChart(data) {
   let dateArray = [];
   let dataArray = [];
+  let hospArray = [];
   let finalDataArray = [];
+  let finalHospArray = [];
 
   for (let i = data.length - 8; i < data.length; i++) {
     dateArray.push(data[i][0].split(" ")[0]);
     let tempArr = [];
+    let temp2Arr = [];
     data[i][1].forEach((el) => {
       tempArr.push(el.Total_reported);
+      temp2Arr.push(el.Hospital_admission);
     });
     dataArray.push(tempArr);
+    hospArray.push(temp2Arr);
   }
   dateArray.shift();
 
   for (let i = 0; i < dataArray.length - 1; i++) {
     finalDataArray.push(
       dataArray[i + 1].reduce(add) - dataArray[i].reduce(add)
+    );
+    finalHospArray.push(
+      hospArray[i + 1].reduce(add) - hospArray[i].reduce(add)
     );
   }
 
@@ -192,8 +200,12 @@ function generateCasesPerDayChart(data) {
     data: {
       colors: {
         "New Cases Per Day": "gold",
+        "New Hospital Adm. Per Day": "darkblue",
       },
-      columns: [["New Cases Per Day", ...finalDataArray]],
+      columns: [
+        ["New Cases Per Day", ...finalDataArray],
+        ["New Hospital Adm. Per Day", ...finalHospArray],
+      ],
       type: "bar",
       labels: true,
       labels: {
