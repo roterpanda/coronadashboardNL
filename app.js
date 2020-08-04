@@ -23,6 +23,7 @@ const totalDeathsArray = [];
 const municipalityArray = [];
 const sevenDayCaseLoad = [];
 const weekBeforeCurrentLoad = [];
+const sevenDayAdm = [];
 
 loadingContainer.innerHTML = "LOADING";
 
@@ -297,6 +298,10 @@ function mountData(data, offset = 0) {
       currentElement.Total_reported - weekBefElement.Total_reported
     );
 
+    sevenDayAdm.push(
+      currentElement.Hospital_admission - weekBefElement.Hospital_admission
+    );
+
     weekBeforeCurrentLoad.push(
       weekBefElement.Total_reported - twoWeeksBefElement.Total_reported
     );
@@ -329,6 +334,7 @@ function mountData(data, offset = 0) {
         currentElement.Total_reported - weekBefElement.Total_reported,
         currentElement.Total_reported,
         numNewHospital,
+        currentElement.Hospital_admission - weekBefElement.Hospital_admission,
         currentElement.Hospital_admission,
         numNewDeaths,
         currentElement.Deceased,
@@ -345,6 +351,7 @@ function mountData(data, offset = 0) {
       sevenDayCaseLoad.reduce(add),
       totalCasesArray.reduce(add),
       newHospAdmArray.reduce(add),
+      sevenDayAdm.reduce(add),
       totalHospAdmArray.reduce(add),
       newDeathsArray.reduce(add),
       totalDeathsArray.reduce(add),
