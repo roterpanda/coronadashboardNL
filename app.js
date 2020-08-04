@@ -194,6 +194,8 @@ function generateCasesPerDayChart(data) {
     );
   }
 
+  let sevDayAverage = sevenDayCaseLoad.reduce(add) / 7;
+
   var chart = bb.generate({
     bindto: "#chartCasesLastWeekPerDay",
 
@@ -216,6 +218,17 @@ function generateCasesPerDayChart(data) {
       x: {
         type: "category",
         categories: dateArray,
+      },
+    },
+    grid: {
+      y: {
+        lines: [
+          {
+            value: sevDayAverage,
+            text: "7 Day Average: " + sevDayAverage.toFixed(2),
+            position: "start",
+          },
+        ],
       },
     },
   });
