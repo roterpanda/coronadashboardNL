@@ -49,6 +49,9 @@ fetch(
     mainChart = generateNewCasesChart();
     SevenDayChart = generate7DayChart();
     generateCasesPerDayChart(healthData);
+  })
+  .catch(() => {
+    loadingContainer.innerHTML = "Error loading data";
   });
 
 function groupBy(objectArray, property) {
