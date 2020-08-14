@@ -54,6 +54,15 @@ fetch(
     loadingContainer.innerHTML = "Error loading data";
   });
 
+fetch("https://stichting-nice.nl/covid-19/public/new-intake/")
+  .then((res) => res.json())
+  .then((data) => {
+    generateICChart(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 function groupBy(objectArray, property) {
   return objectArray.reduce((acc, obj) => {
     let key = obj[property];
@@ -282,6 +291,38 @@ function generateNewCasesChart() {
   });
 
   return chart;
+}
+
+function generateICChart(data) {
+  const weekData = data[0].slice(data[0].length - 7, data[0].length);
+  const days = weekData.map((el) => {
+    return el.date;
+  });
+  const numbers = weekData.map((el) => {
+    return el.value;
+  });
+
+  var chart = bb.generate({
+    bindto: "#chartICLastWeekPerDay",
+    data: {
+      columns: [["New IC Intake", ...numbers]],
+      type: "bar",
+      colors: {
+        "New IC Intake": "purple",
+      },
+    },
+    axis: {
+      x: {
+        type: "category",
+        categories: days,
+      },
+      y: {
+        tick: {
+          stepSize: 1,
+        },
+      },
+    },
+  });
 }
 
 function mountData(data, offset = 0) {

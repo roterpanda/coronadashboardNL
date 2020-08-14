@@ -29,6 +29,10 @@ section {
   background: white;
 }
 
+.container {
+  display: flex;
+}
+
 #mainHeading {
   color: white;
 }
@@ -44,6 +48,11 @@ section {
 #casesNewTotalTable table tbody tr:first-child {
   background-color: gold;
   font-weight: bold;
+}
+
+#chartCasesLastWeekPerDay,
+#chartICLastWeekPerDay {
+  width: 50%;
 }
 
 #loading {
