@@ -208,6 +208,7 @@ function generateCasesPerDayChart(data) {
   }
 
   let sevDayAverage = sevenDayCaseLoad.reduce(add) / 7;
+  let hospSevDayAverage = finalHospArray.reduce(add) / 7;
 
   var chart = bb.generate({
     bindto: "#chartCasesLastWeekPerDay",
@@ -238,7 +239,12 @@ function generateCasesPerDayChart(data) {
         lines: [
           {
             value: sevDayAverage,
-            text: "7 Day Average: " + sevDayAverage.toFixed(2),
+            text: "Case Avg.: " + sevDayAverage.toFixed(2),
+            position: "start",
+          },
+          {
+            value: hospSevDayAverage,
+            text: "Hosp. Adm. Avg.: " + hospSevDayAverage.toFixed(2),
             position: "start",
           },
         ],
