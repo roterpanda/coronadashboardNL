@@ -1,5 +1,6 @@
 body {
   font-family: "Roboto", sans-serif;
+  background: black;
 }
 
 #mainContainer {
@@ -25,6 +26,11 @@ section {
   border: 1px solid grey;
   padding: 5px;
   margin-bottom: 5px;
+  background: white;
+}
+
+#mainHeading {
+  color: white;
 }
 
 #casesNewTotalTable table tbody tr:nth-child(odd) {
