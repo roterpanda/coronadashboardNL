@@ -31,6 +31,8 @@ section {
 
 .container {
   display: flex;
+
+  
 }
 
 #mainHeading {
@@ -51,14 +53,30 @@ section {
 }
 
 #chartCasesLastWeekPerDay,
-#chartICLastWeekPerDay {
+#hospitalSituation {
   width: 50%;
+}
+
+#chartCasesLastWeekPerDay {
+  height: 100%;
+  align-self:stretch;
+}
+
+
+
+#hospitalSituation {
+  display: flex;
+  flex-direction: column;
 }
 
 #loading {
   color: red;
   font-weight: bold;
   animation: pulse 0.5s infinite;
+}
+
+#mainMap {
+  height: 750px;
 }
 
 @keyframes pulse {

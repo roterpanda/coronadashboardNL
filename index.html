@@ -12,7 +12,19 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/billboard.js/2.0.2/theme/insight.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    />
     <link rel="stylesheet" href="style.css" />
+
+    <script
+      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""
+    ></script>
 
     <title>Coronavirus Dashboard The Netherlands</title>
   </head>
@@ -30,6 +42,8 @@
           </h2>
 
           <div id="chartNewCases"></div>
+
+          <div id="mainMap"></div>
         </section>
         <section id="casesLastWeekCumulative">
           <h2>
@@ -45,7 +59,10 @@
           </h2>
           <div class="container">
             <div id="chartCasesLastWeekPerDay"></div>
-            <div id="chartICLastWeekPerDay"></div>
+            <div id="hospitalSituation">
+              <div id="chartICLastWeekPerDay"></div>
+              <div id="overallHospitalIntake"></div>
+            </div>
           </div>
         </section>
 

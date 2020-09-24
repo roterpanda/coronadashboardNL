@@ -24,8 +24,25 @@ const municipalityArray = [];
 const sevenDayCaseLoad = [];
 const weekBeforeCurrentLoad = [];
 const sevenDayAdm = [];
+const munCodes = [];
 
 loadingContainer.innerHTML = "LOADING";
+
+fetch("https://stichting-nice.nl/covid-19/public/new-intake/")
+  .then((res) => res.json())
+  .then((data) => {
+    generateICChart(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+fetch("https://stichting-nice.nl/covid-19/public/zkh/intake-count/")
+  .then((res) => res.json())
+  .then((data) => {
+    generateHospitalChart(data);
+  })
+  .catch(err => console.log(err));
 
 fetch(
   "https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.json"
@@ -49,19 +66,20 @@ fetch(
     mainChart = generateNewCasesChart();
     SevenDayChart = generate7DayChart();
     generateCasesPerDayChart(healthData);
-  })
-  .catch(() => {
-    loadingContainer.innerHTML = "Error loading data";
-  });
 
-fetch("https://stichting-nice.nl/covid-19/public/new-intake/")
-  .then((res) => res.json())
-  .then((data) => {
-    generateICChart(data);
+    fetch("https://cartomap.github.io/nl/wgs84/gemeente_2019.geojson")
+      .then((res) => res.json())
+      .then((data) => {
+        generateMap(data);
+      })
+      .catch((err) => console.log(err));
   })
   .catch((err) => {
+    loadingContainer.innerHTML = "Error loading data";
     console.log(err);
   });
+
+
 
 function groupBy(objectArray, property) {
   return objectArray.reduce((acc, obj) => {
@@ -134,6 +152,61 @@ function updateHeaders(data, offset = 0) {
 
   mainTitle.innerText +=
     " (Last Update: " + data[data.length - 1 - offset][0] + ")";
+}
+
+function getColor(d) {
+  return d > 100
+    ? "#800026"
+    : d > 50
+    ? "#BD0026"
+    : d > 20
+    ? "#E31A1C"
+    : d > 10
+    ? "#FC4E2A"
+    : d > 5
+    ? "#FD8D3C"
+    : d > 3
+    ? "#FEB24C"
+    : d > 0
+    ? "#FED976"
+    : "#eee";
+}
+
+function style(feature) {
+  return {
+    fillColor: getColor(
+      newCasesArray[munCodes.indexOf(feature.properties.statcode)]
+    ),
+    weight: 1,
+    opacity: 1,
+    color: "white",
+
+    fillOpacity: 0.9,
+  };
+}
+
+function generateMap(data) {
+  var mymap = L.map("mainMap").setView([52.367, 5.25], 8);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(mymap);
+
+  L.geoJson(data, {
+    style: style,
+    onEachFeature: function (feature, layer) {
+      let iMun = munCodes.indexOf(feature.properties.statcode);
+      layer.bindTooltip(
+        "<strong>" +
+          feature.properties.statnaam +
+          "</strong><br/>" +
+          "New cases: " +
+          newCasesArray[iMun] +
+          "<br/>7 Day Cases: " +
+          sevenDayCaseLoad[iMun]
+      );
+    },
+  }).addTo(mymap);
 }
 
 function generate7DayChart() {
@@ -313,6 +386,7 @@ function generateICChart(data) {
     data: {
       columns: [["New IC Intake", ...numbers]],
       type: "bar",
+      labels: "true",
       colors: {
         "New IC Intake": "purple",
       },
@@ -329,6 +403,36 @@ function generateICChart(data) {
       },
     },
   });
+}
+
+function generateHospitalChart(data) {
+  const days = data.map(el => el.date);
+  const numbers = data.map(el => el.value);
+
+  const dayDifference = numbers.map((el, i, arr) => {
+    
+      return el - arr[i - 1];
+    
+  });
+  
+
+  var chart = bb.generate({
+    bindto: "#overallHospitalIntake",
+    data: {
+      columns: [
+        ["Patients in Normal Care Hospitals", ...numbers],
+        ["Difference to Previous Day", ...dayDifference]
+      ]
+    },
+    axis: {
+      x: {
+        type: "category",
+        categories: days,
+        tick: { text: { show: false } }
+      }
+    }
+  });
+
 }
 
 function mountData(data, offset = 0) {
@@ -373,6 +477,7 @@ function mountData(data, offset = 0) {
         ? currentElement.Municipality_name
         : currentElement.Province + " (P)"
     );
+    munCodes.push(currentElement.Municipality_code);
 
     addNewRow(
       dataTable,
