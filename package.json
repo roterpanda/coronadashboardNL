@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "billboard.js": "^2.0.2"
+    "billboard.js": "^3.6.0"
   }
 }
